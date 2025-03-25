@@ -1,45 +1,41 @@
-**Executive Summary**
-Microsoft reported strong financial and operational results, with revenue surpassing $69 billion and Microsoft Cloud revenue reaching $40.9 billion, up 21% year-over-year. The company's AI business revenue reached an annual run rate of $13 billion, up 175% year-over-year. Microsoft Cloud gross margin percentage decreased 2 points year-over-year to 70%, while company gross margin percentage increased slightly year-over-year to 69%. Operating expenses increased 5%, lower than expected, and operating margins increased 2 points year-over-year to 45%.
+**Conclusion**
 
-**Operational Highlights**
+Microsoft's financial and operational reports indicate a strong performance, with revenue surpassing $69 billion and a 12% increase year-over-year. The company's cloud revenue, particularly Azure, has shown significant growth, with a 21% increase year-over-year. Microsoft's AI business has also seen substantial growth, with a 175% increase year-over-year. The company's investments in AI infrastructure and capacity expansion are expected to drive growth in the second half of the year.
 
-* Azure data center capacity has more than doubled in the last three years, with a record addition of capacity last year.
-* Microsoft has over 19,000 paid customers for its data analytics product, Microsoft Fabric, which is the fastest-growing analytics product in the company's history.
+**Key Points**
+
+* Microsoft Cloud revenue surpassed $40 billion, up 21% year-over-year
+* AI business revenue grew 175% year-over-year, with an annual run rate of $13 billion
+* Azure continues to expand, with customers migrating workloads to the platform
+* Microsoft 365 Copilot has seen accelerated customer adoption, with customers increasing their seats by over 10x in 18 months
+* Commercial bookings grew 67%, with a commercial remaining performance obligation of $298 billion, up 34% year-over-year
+
+**Contents**
+
+### Situation Analysis
+
+Microsoft's financial and operational reports indicate a strong performance, with revenue growth driven by cloud and AI businesses. The company's cloud revenue has surpassed $40 billion, with a 21% increase year-over-year. Azure continues to expand, with customers migrating workloads to the platform. Microsoft's AI business has also seen substantial growth, with a 175% increase year-over-year.
+
+### Future Outlook
+
+Microsoft's future outlook is positive, with expectations of double-digit revenue and operating income growth. The company's investments in AI infrastructure and capacity expansion are expected to drive growth in the second half of the year. Microsoft's guidance for the next quarter includes:
+
+* Productivity and Business Processes: 11-12% revenue growth (constant currency)
+* Microsoft 365 commercial cloud: 14-15% revenue growth (constant currency)
+* Intelligent Cloud: 19-20% revenue growth (constant currency)
+* Azure: 31-32% revenue growth (constant currency)
+
+### Operation Highlights
+
+Microsoft's operational highlights include:
+
+* Commercial bookings: up 67%
+* Commercial remaining performance obligation: $298 billion, up 34%
+* Annuity mix: 97%
+* Operating expenses: up 5%, lower than expected
+* Operating margins: up 2 points year-over-year to 45%
+* Headcount: 2% higher than a year ago
+* Azure data center capacity has more than doubled in the last three years, with significant additions in the last year.
+* Microsoft Fabric has over 19,000 paid customers and is the fastest-growing analytics product in Microsoft's history.
 * Power BI has over 30 million monthly active users, up 40% year-over-year.
-* Azure OpenAI apps have more than doubled year-over-year, driving growth in SQL Hyperscale and Cosmos DB.
-* GitHub has 150 million developers, up 50% over the past two years, and GitHub Copilot has seen significant adoption, including over 1 million signups in its first week.
-* Microsoft 365 Copilot has seen accelerated customer adoption, with customers expanding their seats by over 10x in the past 18 months, and daily usage intensity increasing by over 60% quarter-over-quarter.
-
-**Segment Results**
-
-* Productivity and Business Processes: revenue grew 14% to $29.4 billion, driven by Microsoft 365 commercial.
-* Intelligent Cloud: revenue grew 19% to $25.5 billion, driven by Azure AI services (157% year-over-year growth).
-* Personal Computing: revenue remained relatively unchanged at $14.7 billion, driven by Windows OEM pre-builts and Search advertising.
-
-**Financial Highlights**
-
-* Revenue: $69.6 billion, up 12% year-over-year.
-* Gross margin dollars: up 13% (12% in constant currency).
-* Operating income: up 17% (16% in constant currency).
-* Earnings per share: $3.23, up 10% year-over-year.
-* Commercial bookings: up 67% (75% in constant currency), driven by Azure commitments from OpenAI.
-* Commercial remaining performance obligation: $298 billion, up 34% (36% in constant currency).
-
-**Future Outlook**
-
-* Revenue growth expected to be:
-	+ 11-12% in constant currency for Productivity and Business Processes.
-	+ 19-20% in constant currency for Intelligent Cloud.
-	+ $12.4-12.8 billion for More Personal Computing.
-* Microsoft Cloud gross margin percentage expected to be roughly 69%, down year-over-year due to AI infrastructure scaling.
-* Commercial bookings growth expected to be roughly flat year-over-year.
-* Operating expenses expected to grow 5-6% in constant currency.
-* Tax rate: approximately 18% effective tax rate for Q3.
-* Capital expenditures expected to remain at similar levels in Q3 and Q4, with a lower growth rate in FY26 and a shift towards short-lived assets.
-
-**Guidance and Outlook**
-
-* The company expects double-digit revenue and operating income growth for the full fiscal year, with operating margins expected to be up slightly year-over-year.
-* Microsoft's AI growth rate exceeded expectations, driven by Azure AI and Microsoft Co-Pilot.
-* The company is optimistic about scaling AI workloads, with innovations like DeepSeq contributing to improvements.
-* Microsoft is focused on balance in its go-to-market strategy, prioritizing new design wins and emerging AI workloads in the enterprise.
+* GitHub has 150 million developers, up 50% over the past two years, and GitHub Copilot has seen over 1 million signups in its first week.
