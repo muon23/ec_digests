@@ -20,6 +20,7 @@ class GptBot(Bot):
     ]
 
     MODEL_ALIASES = {
+        "gpt-4.5": "gpt-4.5-preview",
         "gpt-4o+": "gpt-4o-2024-08-06",
         "gpt-o1": "o1",
         "gpt-o3": "o3-mini",
