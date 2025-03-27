@@ -1,34 +1,39 @@
 import logging
 import os
-import re
-from typing import Any, Tuple, List
+from typing import Any, Sequence, List
 
 from langchain_core.messages import AIMessage
+from langchain_core.prompts import ChatPromptTemplate
 
-from bots.Bot import Bot
-from bots.HuggingFaceChatRunnable import HuggingFaceChatRunnable
+from llms.Llm import Llm
+from llms.HuggingFaceChatRunnable import HuggingFaceChatRunnable
 
 
-class DeepSeekBot(Bot):
+class LlamaBot(Llm):
 
     SUPPORTED_MODELS = [
-        "deepseek-ai/DeepSeek-R1",
-        "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+        "meta-llama/Llama-2-7b-chat-hf",
+        "meta-llama/Llama-3.2-1B",
     ]
 
     MODEL_ALIASES = {
-        "deepseek": "deepseek-ai/DeepSeek-R1",
-        "deepseek-gwen": "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+        "llama-2": "meta-llama/Llama-2-7b-chat-hf",
+        "llama-3": "meta-llama/Llama-3.2-1B"
     }
 
     __MODEL_TOKEN_LIMITS = {
-        "deepseek-ai/DeepSeek-R1": 8000,
-        "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B": 32_768,
+        "meta-llama/Llama-2-7b-chat-hf": 4096,
+        "meta-llama/Llama-3.1-8B": 8000,
     }
+
+    __CHAT_NOT_SUPPORTED = [
+        "meta-llama/Llama-2-7b-chat-hf",
+        "meta-llama/Llama-3.2-1B",
+    ]
 
     __URL_PREFIX = "https://huggingface.co/"
 
-    def __init__(self, model_name: str = "deepseek", model_key: str = None, **kwargs):
+    def __init__(self, model_name: str = "llama-2", model_key: str = None, **kwargs):
         self.model_name = model_name
         self.role_names = ["system", "user", "assistant"]
 
@@ -52,9 +57,23 @@ class DeepSeekBot(Bot):
         super().__init__(llm=self.llm)
 
     @classmethod
-    def __separate_think_tag(self, text: str) -> Tuple[str, str]:
-        match = re.search(r"(<think>)?(.*?)</think>(.*)", text, re.DOTALL)
-        return (match.group(2).strip(), match.group(3).strip()) if match else ("", text)
+    def __convert_to_llama_prompt(cls, messages: Sequence[tuple[Llm.Role, str]]) -> str:
+        prompt = ""
+        for role, content in messages:
+            if role == "system":
+                prompt += f"<<SYS>>\n{content}\n<</SYS>>\n\n"
+            elif role == "user":
+                prompt += f"[INST] {content} [/INST]\n"
+            else:
+                prompt += f"{content}\n"
+        return prompt
+
+    def preprocess_prompt(self, prompt: Sequence[tuple[Llm.Role, str] | str] | str) -> ChatPromptTemplate:
+        # Reformat the prompt
+        if not isinstance(prompt, str):
+            prompt = self.__convert_to_llama_prompt(prompt)
+
+        return ChatPromptTemplate(messages=[prompt])
 
     def clean_up_response(self, response: Any) -> dict:
         if isinstance(response, AIMessage):
@@ -68,9 +87,7 @@ class DeepSeekBot(Bot):
         else:
             raise TypeError(f"Unsupported return type for HfBot.react() (was {type(response)})")
 
-        thought, content = self.__separate_think_tag(content)
-        if thought:
-            metadata["thought"] = thought
+        content = content.replace("[/INST]", "")
 
         return {
             "content": content,
@@ -80,6 +97,9 @@ class DeepSeekBot(Bot):
     def get_max_tokens(self) -> int:
         limit = self.__MODEL_TOKEN_LIMITS.get(self.model_name, 4000)
         return limit
+
+    def get_default_task(self) -> str:
+        return "generation" if self.model_name in self.__CHAT_NOT_SUPPORTED else "chat"
 
     @classmethod
     def get_supported_models(cls) -> List[str]:

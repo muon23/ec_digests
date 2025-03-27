@@ -7,7 +7,7 @@ from langchain_core.runnables import RunnableSequence, Runnable, RunnableConfig
 from transformers import AutoTokenizer
 
 
-class Bot(ABC):
+class Llm(ABC):
     class Role(Enum):
         SYSTEM = 0
         HUMAN = 1

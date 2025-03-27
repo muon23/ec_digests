@@ -2,11 +2,11 @@ import logging
 import os
 from typing import Any, List
 
-from bots.Bot import Bot
-from bots.DeepInfraChatRunnable import DeepInfraChatRunnable
+from llms.Llm import Llm
+from llms.DeepInfraChatRunnable import DeepInfraChatRunnable
 
 
-class DeepInfraBot(Bot):
+class DeepInfraLlm(Llm):
 
     SUPPORTED_MODELS = [
         "Sao10K/L3.3-70B-Euryale-v2.3",

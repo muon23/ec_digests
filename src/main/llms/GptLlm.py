@@ -5,10 +5,10 @@ from typing import Any, List
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import AIMessage
 
-from bots.Bot import Bot
+from llms.Llm import Llm
 
 
-class GptBot(Bot):
+class GptLlm(Llm):
     SUPPORTED_MODELS = [
         "gpt-3.5-turbo",
         "gpt-4",
@@ -44,7 +44,7 @@ class GptBot(Bot):
 
         if self.model_name in ["o1", "o1-preview", "o3-mini"]:
             kwargs["temperature"] = 1
-            role_names = {Bot.Role.SYSTEM: "user"}
+            role_names = {Llm.Role.SYSTEM: "user"}
         else:
             role_names = {}
 
