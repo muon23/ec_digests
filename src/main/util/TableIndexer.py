@@ -44,7 +44,7 @@ class TableIndexer:
 
             self.vector_store.insert(Document(text=text, metadata=metadata))
 
-    def query(self, question: str, top_k=5, **kwarg) -> (str, dict):
+    def query(self, question: str, top_k=10, **kwarg) -> (str, dict):
         engine = self.vector_store.as_query_engine(similarity_top_k=top_k, **kwarg)
         answer = engine.query(question)
         return answer.response
