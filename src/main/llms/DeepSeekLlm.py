@@ -3,10 +3,13 @@ import os
 import re
 from typing import Any, Tuple, List
 
+from langchain_core.language_models import BaseLanguageModel
 from langchain_core.messages import AIMessage
+from langchain_core.runnables import Runnable
 
 from llms.Llm import Llm
 from llms.HuggingFaceChatRunnable import HuggingFaceChatRunnable
+from llms.RunnableToLLMAdapter import RunnableToLLMAdapter
 
 
 class DeepSeekLlm(Llm):
@@ -66,7 +69,7 @@ class DeepSeekLlm(Llm):
             metadata = dict()
 
         else:
-            raise TypeError(f"Unsupported return type for HfBot.react() (was {type(response)})")
+            raise TypeError(f"Unsupported return type for HfLlm.invoke() (was {type(response)})")
 
         thought, content = self.__separate_think_tag(content)
         if thought:
@@ -84,3 +87,9 @@ class DeepSeekLlm(Llm):
     @classmethod
     def get_supported_models(cls) -> List[str]:
         return list(cls.MODEL_ALIASES.keys()) + cls.SUPPORTED_MODELS
+
+    def as_runnable(self) -> Runnable:
+        return self.llm
+
+    def as_language_model(self) -> BaseLanguageModel:
+        return RunnableToLLMAdapter(self.as_runnable())

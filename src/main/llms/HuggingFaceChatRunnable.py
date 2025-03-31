@@ -26,10 +26,10 @@ class HuggingFaceChatRunnable(Runnable):
 
     def invoke(self, text: Input, config: Optional[RunnableConfig] = None, **kwargs) -> str:
         """
-        Invoke the Hugging Face chat model with the given input.
+        Invoke the Hugging Face chat model with the given query.
 
         Args:
-            text (dict): A dictionary containing the "content" field with the user input.
+            text (dict): A dictionary containing the "content" field with the user query.
             config (Optional[RunnableConfig]): Optional configuration for the Runnable.
 
         Returns:

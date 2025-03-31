@@ -3,40 +3,35 @@ import os
 from typing import Any, List
 
 from langchain_core.language_models import BaseLanguageModel
-from langchain_core.runnables import Runnable
-from langchain_openai import ChatOpenAI
 from langchain_core.messages import AIMessage
+from langchain_core.runnables import Runnable
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 from llms.Llm import Llm
 
 
-class GptLlm(Llm):
+class GeminiLlm(Llm):
     SUPPORTED_MODELS = [
-        "gpt-3.5-turbo",
-        "gpt-4",
-        "gpt-4o-2024-08-06",
-        "gpt-4o",
-        "o1-preview", "o1", "gpt-4o-1",
-        "o3-mini", "gpt-4o-3",
-        "gpt-4.5-preview",
+        "gemini-2.5-pro-exp-03-25",
+        "gemini-2.0-flash",
+        "gemini-2.0-flash-thinking-exp-01-21",
     ]
 
     MODEL_ALIASES = {
-        "gpt-4.5": "gpt-4.5-preview",
-        "gpt-4o+": "gpt-4o-2024-08-06",
-        "gpt-o1": "o1",
-        "gpt-o3": "o3-mini",
-        "gpt-3.5": "gpt-3.5-turbo",
+        "gemini-2.5": "gemini-2.5-pro-exp-03-25",
+        "gemini-2": "gemini-2.0-flash",
+        "gemini-2t": "gemini-2.0-flash-thinking-exp-01-21"
     }
 
     __MODEL_TOKEN_LIMITS = {
-        "gpt-4": 8192,
-        "gpt-3.5-turbo": 16_000
+        "gemini-2.5-pro-exp-03-25": 1_048_576,
+        "gemini-2.0-flash": 1_048_576,
+        "gemini-2.0-flash-thinking-exp-01-21": 1_048_576,
     }
 
     def __init__(self, model_name: str = "gpt-4", model_key: str = None, **kwargs):
         self.model_name = model_name
-        self.role_names = ["system", "user", "assistant"]
+        self.role_names = ["user", "user", "model"]
 
         if self.model_name in self.MODEL_ALIASES:
             self.model_name = self.MODEL_ALIASES[self.model_name]
@@ -44,21 +39,15 @@ class GptLlm(Llm):
         if self.model_name not in self.SUPPORTED_MODELS:
             raise ValueError(f"LLM model {model_name} not supported")
 
-        if self.model_name in ["o1", "o1-preview", "o3-mini"]:
-            kwargs["temperature"] = 1
-            role_names = {Llm.Role.SYSTEM: "user"}
-        else:
-            role_names = {}
-
         logging.info(f"Using {self.model_name}")
 
-        self.model_key = model_key if model_key else os.environ.get("OPENAI_API_KEY", None)
+        self.model_key = model_key if model_key else os.environ.get("GEMINI_API_KEY", None)
         if not self.model_key:
-            raise RuntimeError(f"OpenAI API key not provided")
+            raise RuntimeError(f"Gemini API key not provided")
 
-        self.llm = ChatOpenAI(model_name=self.model_name, openai_api_key=self.model_key, **kwargs)
+        self.llm: ChatGoogleGenerativeAI = ChatGoogleGenerativeAI(model=self.model_name, google_api_key=self.model_key, **kwargs)
 
-        super().__init__(llm=self.llm, role_names=role_names)
+        super().__init__(llm=self.llm, role_names={self.Role.SYSTEM: "user", self.Role.AI: "model"})
 
     def clean_up_response(self, response: Any) -> dict:
         if isinstance(response, AIMessage):
@@ -71,7 +60,7 @@ class GptLlm(Llm):
             raise TypeError(f"Unsupported return type for GptLlm.invoke() (was {type(response)})")
 
     def get_num_tokens(self, text: str) -> int:
-        return ChatOpenAI(temperature=0).get_num_tokens(text)
+        return self.llm.get_num_tokens(text)
 
     def get_max_tokens(self) -> int:
         return self.__MODEL_TOKEN_LIMITS.get(self.model_name, 100_000)
@@ -85,3 +74,4 @@ class GptLlm(Llm):
 
     def as_language_model(self) -> BaseLanguageModel:
         return self.llm
+

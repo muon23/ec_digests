@@ -2,14 +2,17 @@ import logging
 import os
 from typing import Any, Sequence, List
 
+from langchain_core.language_models import BaseLanguageModel
 from langchain_core.messages import AIMessage
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import Runnable
 
 from llms.Llm import Llm
 from llms.HuggingFaceChatRunnable import HuggingFaceChatRunnable
+from llms.RunnableToLLMAdapter import RunnableToLLMAdapter
 
 
-class LlamaBot(Llm):
+class LlamaLlm(Llm):
 
     SUPPORTED_MODELS = [
         "meta-llama/Llama-2-7b-chat-hf",
@@ -85,7 +88,7 @@ class LlamaBot(Llm):
             metadata = dict()
 
         else:
-            raise TypeError(f"Unsupported return type for HfBot.react() (was {type(response)})")
+            raise TypeError(f"Unsupported return type for LlamaLlm.invoke() (was {type(response)})")
 
         content = content.replace("[/INST]", "")
 
@@ -104,3 +107,9 @@ class LlamaBot(Llm):
     @classmethod
     def get_supported_models(cls) -> List[str]:
         return list(cls.MODEL_ALIASES.keys()) + cls.SUPPORTED_MODELS
+
+    def as_runnable(self) -> Runnable:
+        return self.llm
+
+    def as_language_model(self) -> BaseLanguageModel:
+        return RunnableToLLMAdapter(self.as_runnable())

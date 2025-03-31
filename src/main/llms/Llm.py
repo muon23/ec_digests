@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from enum import Enum
 from typing import Sequence, Any, List
 
+from langchain_core.language_models import BaseLanguageModel
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableSequence, Runnable, RunnableConfig
 from transformers import AutoTokenizer
@@ -27,7 +28,7 @@ class Llm(ABC):
         # For counting tokens
         self.tokenizer = AutoTokenizer.from_pretrained("gpt2")
 
-    def react(self, prompt: Sequence[tuple[Role | str, str] | str] | str, **kwargs) -> dict:
+    def invoke(self, prompt: Sequence[tuple[Role | str, str] | str] | str, **kwargs) -> dict:
         # Format the prompt
         prompt = self.preprocess_prompt(prompt)
 
@@ -73,3 +74,16 @@ class Llm(ABC):
     @abstractmethod
     def get_supported_models(cls) -> List[str]:
         pass
+
+    #
+    # LangChain adapters
+    #
+    @abstractmethod
+    def as_runnable(self) -> Runnable:
+        pass
+
+    @abstractmethod
+    def as_language_model(self) -> BaseLanguageModel:
+        pass
+
+
