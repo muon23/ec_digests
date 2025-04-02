@@ -20,7 +20,7 @@ class TableIndexer:
         if llm:
             Settings.llm = llm
 
-        self.vector_store = vector_store if vector_store else VectorStoreIndex.from_documents([])
+        self.vector_store = vector_store or VectorStoreIndex.from_documents([])
 
     def save(self, path: str):
         self.vector_store.storage_context.persist(persist_dir=path)
