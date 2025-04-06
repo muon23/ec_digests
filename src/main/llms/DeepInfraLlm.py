@@ -18,9 +18,11 @@ class DeepInfraLlm(Llm):
         "microsoft/WizardLM-2-8x22B",
         "google/gemini-2.0-flash-001",
         "deepseek-ai/DeepSeek-V3-0324",
+        "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
     ]
 
     MODEL_ALIASES = {
+        "llama-4": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
         "euryale": "Sao10K/L3.3-70B-Euryale-v2.3",
         "llama-3": "meta-llama/Llama-3.3-70B-Instruct",
         "wizardlm-2": "microsoft/WizardLM-2-8x22B",
